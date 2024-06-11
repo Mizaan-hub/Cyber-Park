@@ -2,7 +2,7 @@ import React from "react";
 
 const PodcastDetails = ({ params }: { params: { podcastId: String } }) => {
   return (
-    <div>PodcastDetails</div>
+    <p className="text-white-1">Podcast Details for {params.podcastId} </p>
   );
 };
 
