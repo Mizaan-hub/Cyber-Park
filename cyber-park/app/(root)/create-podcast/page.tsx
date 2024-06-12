@@ -139,6 +139,11 @@ const CreatePodcast = () => {
           <div className="flex flex-col pt-10">
             <GeneratePodcast />
             <GenerateThumbnail />
+            <div className="mt-10 w-full">
+              <Button type="submit" className="text-16 w-full text-white-1 bg-orange-1 py-4 font-bold transition-all duration-500 hover:bg-black-1">
+                Create Podcast
+              </Button>
+            </div>
           </div>
         </form>
       </Form>
