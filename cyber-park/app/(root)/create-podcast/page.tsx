@@ -24,21 +24,21 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
-const voiceCategories = ['alloy', 'shimmer', 'nova', 'echo', 'fable', 'onyx'];
+const voiceCategories = ["alloy", "shimmer", "nova", "echo", "fable", "onyx"];
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
+  podcastTitle: z.string().min(1, "Podcast Title Is Required"),
 });
 
 const CreatePodcast = () => {
+  const [voiceType, setVoiceType] = useState<string | null>(null);
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      podcastTitle: "",
     },
   });
 
@@ -80,13 +80,16 @@ const CreatePodcast = () => {
               <Label className="text-16 font-bold text-white-1">
                 Select AI Voice
               </Label>
-              <Select>
+              <Select onValueChange={(value) => setVoiceType(value)}>
                 <SelectTrigger
                   className={cn(
                     "text-16 w-full border-none bg-black-1 text-gray-1"
                   )}
                 >
-                  <SelectValue placeholder="Select AI Voice" />
+                  <SelectValue
+                    placeholder="Select AI Voice"
+                    className="capitalize text-gray-1"
+                  />
                 </SelectTrigger>
                 <SelectContent className="text-16 border-none bg-black-1 font-bold text-white-1 focus:ring-orange-1">
                   {voiceCategories.map((category) => (
@@ -99,6 +102,13 @@ const CreatePodcast = () => {
                     </SelectItem>
                   ))}
                 </SelectContent>
+                {voiceType && (
+                  <audio
+                    src={`/${voiceType}.mp3`} //"/cyber-park/public/{voiceType}.mp3"
+                    autoPlay
+                    className="hidden"
+                  />
+                )}
               </Select>
             </div>
           </div>
