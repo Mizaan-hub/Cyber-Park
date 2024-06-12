@@ -25,6 +25,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
+const voiceCategories = ['alloy', 'shimmer', 'nova', 'echo', 'fable', 'onyx'];
+
 const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
@@ -87,7 +89,7 @@ const CreatePodcast = () => {
                   <SelectValue placeholder="Select AI Voice" />
                 </SelectTrigger>
                 <SelectContent className="text-16 border-none bg-black-1 font-bold text-white-1 focus:ring-orange-1">
-                  {["voice 1", "voice 2"].map((category) => (
+                  {voiceCategories.map((category) => (
                     <SelectItem
                       key={category}
                       value={category}
