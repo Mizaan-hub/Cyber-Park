@@ -25,11 +25,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { Textarea } from "@/components/ui/textarea";
+import GeneratePodcast from "@/components/GeneratePodcast";
+import GenerateThumbnail from "@/components/GenerateThumbnail";
 
 const voiceCategories = ["alloy", "shimmer", "nova", "echo", "fable", "onyx"];
 
 const formSchema = z.object({
   podcastTitle: z.string().min(1, "Podcast Title Is Required"),
+  podcastDescription: z.string().min(2, "Podcast Description Is Required"),
 });
 
 const CreatePodcast = () => {
@@ -39,6 +43,7 @@ const CreatePodcast = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       podcastTitle: "",
+      podcastDescription: "",
     },
   });
 
@@ -63,7 +68,7 @@ const CreatePodcast = () => {
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2.5">
                   <FormLabel className="text-16 font-bold text-white-1">
-                    Podcast Title
+                    Title
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -111,8 +116,30 @@ const CreatePodcast = () => {
                 )}
               </Select>
             </div>
+            <FormField
+              control={form.control}
+              name="podcastDescription"
+              render={({ field }) => (
+                <FormItem className="flex flex-col gap-2.5">
+                  <FormLabel className="text-16 font-bold text-white-1">
+                    Description
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea
+                      className="input-class focus-visible:ring-orange-1"
+                      placeholder="Write a short podcast description"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-white-1" />
+                </FormItem>
+              )}
+            />
           </div>
-          {/* <Button type="submit">Submit</Button> */}
+          <div className="flex flex-col pt-10">
+            <GeneratePodcast />
+            <GenerateThumbnail />
+          </div>
         </form>
       </Form>
     </section>
