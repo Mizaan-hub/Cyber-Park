@@ -40,16 +40,20 @@ const formSchema = z.object({
 
 const CreatePodcast = () => {
   const [imagePrompt, setImagePrompt] = useState("");
-  const [imageStorageId, setImageStorageId] = useState<Id<"_storage"> | null>(null);
-  const [imageUrl, setImageUrl] = useState('')
-  
-  const [audioUrl, setAudioUrl] = useState('')
-  const [audioStorageId, setAudioStorageId] = useState<Id<"_storage"> | null>(null);
-  const [audioDuration, setAudioDuration] = useState(0)
-  
+  const [imageStorageId, setImageStorageId] = useState<Id<"_storage"> | null>(
+    null
+  );
+  const [imageUrl, setImageUrl] = useState("");
+
+  const [audioUrl, setAudioUrl] = useState("");
+  const [audioStorageId, setAudioStorageId] = useState<Id<"_storage"> | null>(
+    null
+  );
+  const [audioDuration, setAudioDuration] = useState(0);
+
   const [voiceType, setVoiceType] = useState<string | null>(null);
-  const [voicePrompt, setVoicePrompt] = useState('')
-  
+  const [voicePrompt, setVoicePrompt] = useState("");
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // 1. Define your form.
@@ -86,7 +90,7 @@ const CreatePodcast = () => {
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="input-class focus-visible:ring-orange-1"
+                      className="input-class focus-visible:ring-offset-orange-1"
                       placeholder="Cyber Pro Podcast"
                       {...field}
                     />
@@ -102,7 +106,7 @@ const CreatePodcast = () => {
               <Select onValueChange={(value) => setVoiceType(value)}>
                 <SelectTrigger
                   className={cn(
-                    "text-16 w-full border-none bg-black-1 text-gray-1"
+                    "text-16 w-full border-none bg-black-1 text-gray-1 focus-visible:ring-offset-orange-1"
                   )}
                 >
                   <SelectValue
@@ -140,7 +144,7 @@ const CreatePodcast = () => {
                   </FormLabel>
                   <FormControl>
                     <Textarea
-                      className="input-class focus-visible:ring-orange-1"
+                      className="input-class focus-visible:ring-offset-orange-1"
                       placeholder="Write a short podcast description"
                       {...field}
                     />
@@ -151,14 +155,14 @@ const CreatePodcast = () => {
             />
           </div>
           <div className="flex flex-col pt-10">
-            <GeneratePodcast 
-              setAudioStorageId = {setAudioStorageId}
-              setAudio = {setAudioUrl}
-              voiceType = {voiceType}
-              audio = {audioUrl}
-              voicePrompt = {voicePrompt}
-              setVoicePrompt = {setVoicePrompt}
-              setAudioDuration = {setAudioDuration}
+            <GeneratePodcast
+              setAudioStorageId={setAudioStorageId}
+              setAudio={setAudioUrl}
+              voiceType={voiceType}
+              audio={audioUrl}
+              voicePrompt={voicePrompt}
+              setVoicePrompt={setVoicePrompt}
+              setAudioDuration={setAudioDuration}
             />
             <GenerateThumbnail />
             <div className="mt-10 w-full">
@@ -166,8 +170,8 @@ const CreatePodcast = () => {
                 type="submit"
                 className={
                   isSubmitting
-                    ? "text-16 w-full text-white-1 bg-black-1 py-4 font-bold transition-all duration-500"
-                    : "text-16 w-full text-white-1 bg-orange-1 py-4 font-bold transition-all duration-500 hover:bg-black-1"
+                    ? "text-16 w-full text-white-1 bg-black-1 py-4 font-extrabold transition-all duration-500"
+                    : "text-16 w-full text-white-1 bg-orange-1 py-4 font-extrabold transition-all duration-500 hover:bg-black-1"
                 }
               >
                 {isSubmitting ? (
