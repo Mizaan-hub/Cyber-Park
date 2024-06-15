@@ -14,7 +14,7 @@ export const generateAudioAction = action({
   },
   handler: async (_, { voice, input }) => {
     const mp3 = await openai.audio.speech.create({
-      model: "tts-1",
+      model: "tts-1-hd",
       voice: voice as SpeechCreateParams["voice"],
       input,
     });

@@ -8,6 +8,7 @@ import { useAction, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { v4 as uuidv4 } from "uuid";
 import { useUploadFiles } from "@xixixao/uploadstuff/react";
+import { useToast } from "./ui/use-toast";
 
 const useGeneratePodcast = ({
   setAudio,
@@ -15,12 +16,13 @@ const useGeneratePodcast = ({
   voicePrompt,
   setAudioStorageId,
 }: GeneratePodcastProps) => {
-  // TODO: implement podcast generation logic here
   const [isGenerating, setIsGenerating] = useState(false);
+  const { toast } = useToast();
 
   const getPodcastAudio = useAction(api.openai.generateAudioAction);
 
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
+  const getAudioUrl = useMutation(api.podcasts.getUrl);
 
   const { startUpload } = useUploadFiles(generateUploadUrl);
 
@@ -29,7 +31,9 @@ const useGeneratePodcast = ({
     setAudio("");
 
     if (!voicePrompt) {
-      // ! TODO: show error message
+      toast({
+        title: "Please enter a voice prompt",
+      });
       return setIsGenerating(false);
     }
 
@@ -45,15 +49,22 @@ const useGeneratePodcast = ({
         type: "audio/mpeg",
       });
 
-      const uploaded = await startUpload([file])
+      const uploaded = await startUpload([file]);
       const storageId = (uploaded[0].response as any).storageId;
-      setAudioStorageId(storageId)
+      setAudioStorageId(storageId);
 
-      const audioUrl = await getAudioUrl({storageId})
-
+      const audioUrl = await getAudioUrl({ storageId });
+      setAudio(audioUrl!);
+      setIsGenerating(false);
+      toast({
+        title: "Podcast generated successfully!",
+      });
     } catch (error) {
       console.log("Error Generating Podcast", error);
-      // ! TODO: show error message
+      toast({
+        title: "Error Creating A Podcast",
+        variant: "destructive",
+      });
       setIsGenerating(false);
     }
   };
@@ -82,6 +93,7 @@ const GeneratePodcast = (props: GeneratePodcastProps) => {
       <div className="mt-5 w-full max-w-[200px]">
         <Button
           type="submit"
+          onClick={generatePodcast}
           className={
             isGenerating
               ? "text-16 w-full text-white-1 bg-black-1 py-4 font-bold transition-all duration-500"
